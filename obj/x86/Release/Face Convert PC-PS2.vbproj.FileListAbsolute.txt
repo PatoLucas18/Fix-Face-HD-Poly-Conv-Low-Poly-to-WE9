@@ -1,0 +1,9 @@
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert PC-PS2\bin\Release\Face Convert PC-PS2.exe
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert PC-PS2\bin\Release\Face Convert PC-PS2.pdb
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert PC-PS2\bin\Release\Face Convert PC-PS2.xml
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert PC-PS2\obj\x86\Release\Face_Convert_PC_PS2.Form1.resources
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert PC-PS2\obj\x86\Release\Face_Convert_PC_PS2.Resources.resources
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert PC-PS2\obj\x86\Release\Face Convert PC-PS2.vbproj.GenerateResource.Cache
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert PC-PS2\obj\x86\Release\Face Convert PC-PS2.exe
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert PC-PS2\obj\x86\Release\Face Convert PC-PS2.xml
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert PC-PS2\obj\x86\Release\Face Convert PC-PS2.pdb

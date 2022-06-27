@@ -1,0 +1,12 @@
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert pes5\Face Convert pes5\bin\Debug\Fix Face HD Poly & Conv Low Poly to WE9.exe.config
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert pes5\Face Convert pes5\bin\Debug\Fix Face HD Poly & Conv Low Poly to WE9.exe
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert pes5\Face Convert pes5\bin\Debug\Fix Face HD Poly & Conv Low Poly to WE9.pdb
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert pes5\Face Convert pes5\bin\Debug\Fix Face HD Poly & Conv Low Poly to WE9.xml
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert pes5\Face Convert pes5\bin\Debug\Fix Face HD Poly & Conv Low Poly to WE9.exe.CodeAnalysisLog.xml
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert pes5\Face Convert pes5\bin\Debug\Fix Face HD Poly & Conv Low Poly to WE9.exe.lastcodeanalysissucceeded
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert pes5\Face Convert pes5\obj\x86\Debug\Fix_Face_HD_LOW_Poly.Form1.resources
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert pes5\Face Convert pes5\obj\x86\Debug\Fix_Face_HD_LOW_Poly.Resources.resources
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert pes5\Face Convert pes5\obj\x86\Debug\Fix Face HD Poly Conv Low Poly to WE9.vbproj.GenerateResource.Cache
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert pes5\Face Convert pes5\obj\x86\Debug\Fix Face HD Poly & Conv Low Poly to WE9.exe
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert pes5\Face Convert pes5\obj\x86\Debug\Fix Face HD Poly & Conv Low Poly to WE9.xml
+C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert pes5\Face Convert pes5\obj\x86\Debug\Fix Face HD Poly & Conv Low Poly to WE9.pdb

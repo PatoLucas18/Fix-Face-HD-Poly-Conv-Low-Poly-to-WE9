@@ -1,0 +1,48 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+FixFaceHDPoly&amp;ConvLowPolytoWE9
+</name>
+</assembly>
+<members>
+<member name="M:Fix_Face_HD_LOW_Poly.Zlibtool.Decompress(System.Byte[])">
+	<summary>
+ Decompresses a Byte() array using the DEFLATE algorithm.
+ </summary>
+</member><member name="P:Fix_Face_HD_LOW_Poly.My.Resources.Resources.ResourceManager">
+	<summary>
+  Devuelve la instancia de ResourceManager almacenada en caché utilizada por esta clase.
+</summary>
+</member><member name="P:Fix_Face_HD_LOW_Poly.My.Resources.Resources.Culture">
+	<summary>
+  Reemplaza la propiedad CurrentUICulture del subproceso actual para todas las
+  búsquedas de recursos mediante esta clase de recurso fuertemente tipado.
+</summary>
+</member><member name="P:Fix_Face_HD_LOW_Poly.My.Resources.Resources.template">
+	<summary>
+  Busca un recurso adaptado de tipo System.Byte[].
+</summary>
+</member><member name="P:Fix_Face_HD_LOW_Poly.My.Resources.Resources.templateHD">
+	<summary>
+  Busca un recurso adaptado de tipo System.Byte[].
+</summary>
+</member><member name="T:Fix_Face_HD_LOW_Poly.My.Resources.Resources">
+	<summary>
+  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
+</summary>
+</member><member name="M:Fix_Face_HD_LOW_Poly.ZLIB.ZLIBStream.ReadCRC">
+	<summary>
+ Lee los últimos 4 bytes del stream ya que es donde está el CRC
+ </summary>
+</member><member name="M:Fix_Face_HD_LOW_Poly.ZLIB.ZLIBStream.InicializarStream">
+	<summary>
+ Inicializa el stream
+ </summary>
+</member><member name="M:Fix_Face_HD_LOW_Poly.ZLIB.ZLIBStream.InicializarZLibHeader">
+	<summary>
+ Inicializa el encabezado del stream en formato ZLib
+ </summary>
+</member>
+</members>
+</doc>
