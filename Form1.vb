@@ -7,62 +7,9 @@ Public Class Form1
 
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
         For Each path In files
-            Dim file_temp() As Byte = unzlib(path)
-            Dim vert_offset = BitConverter.ToInt16(file_temp, 32) + 32
-
-            Dim file_template() As Byte
-
-            If BitConverter.ToInt16(file_temp, 336) = 829 Then
-                If ComboBox1.SelectedIndex = 1 Then
-                    file_template = My.Resources.templateHD
-                    Array.Copy(file_temp, vert_offset, file_template, 224, 23392)
-                Else
-                    file_template = My.Resources.template
-                    For i = 0 To array_de_numeros.Count - 1
-                        Dim src = vert_offset + array_de_numeros(i) * 32
-                        Dim dest = 276 + i * 32
-
-                        'Debug.WriteLine("{0},{1}", src, dest)
-                        Array.Copy(file_temp, src, file_template, dest, 32)
-
-                    Next
-                End If
-                'TextBox1.AppendText(path.GetFileName(archivos) & " - Face Fixed!." & vbCrLf)
-            ElseIf BitConverter.ToInt16(file_temp, 216) = 731 Then
-                If ComboBox1.SelectedIndex = 0 Then
-                    file_template = My.Resources.template
-                    For i = 0 To array_de_numeros.Count - 1
-                        Dim src = vert_offset + array_de_numeros(i) * 32
-                        Dim dest = 276 + i * 32
-
-                        'Debug.WriteLine("{0},{1}", src, dest)
-                        Array.Copy(file_temp, src, file_template, dest, 32)
-
-                    Next
-                End If
-                'TextBox1.AppendText(path.GetFileName(archivos) & " - The Face is already fixed!." & vbCrLf)
-            Else
-                'TextBox1.AppendText(path.GetFileName(archivos) & " - No Face PES6 HD Poly!." & vbCrLf)
+            If fix_face(path) = True Then
+                MsgBox("Face Fixed!.")
             End If
-
-            'If ComboBox1.SelectedIndex = 1 Then
-            '    file_template = My.Resources.templateHD
-            '    Array.Copy(file_temp, vert_offset, file_template, 224, 23392)
-            'Else
-            '    file_template = My.Resources.template
-            '    For i = 0 To array_de_numeros.Count - 1
-            '        Dim src = vert_offset + array_de_numeros(i) * 32
-            '        Dim dest = 276 + i * 32
-
-            '        'Debug.WriteLine("{0},{1}", src, dest)
-            '        Array.Copy(file_temp, src, file_template, dest, 32)
-
-            '    Next
-            'End If
-
-
-            zlib_from_array(path, file_template)
-            MsgBox("Face Fixed!.")
 
         Next
     End Sub
@@ -85,45 +32,7 @@ Public Class Form1
                 If Path.GetExtension(archivos) = ".bin" Then
                     MsgBox(archivos)
                     'Debug.WriteLine(Path.GetExtension(archivos))
-                    Dim file_temp() As Byte = unzlib(archivos)
-                    Dim vert_offset = BitConverter.ToInt16(file_temp, 32) + 32
-
-                    Dim file_template() As Byte
-
-                    If BitConverter.ToInt16(file_temp, 336) = 829 Then
-                        If ComboBox1.SelectedIndex = 1 Then
-                            file_template = My.Resources.templateHD
-                            Array.Copy(file_temp, vert_offset, file_template, 224, 23392)
-                        Else
-                            file_template = My.Resources.template
-                            For i = 0 To array_de_numeros.Count - 1
-                                Dim src = vert_offset + array_de_numeros(i) * 32
-                                Dim dest = 276 + i * 32
-
-                                'Debug.WriteLine("{0},{1}", src, dest)
-                                Array.Copy(file_temp, src, file_template, dest, 32)
-
-                            Next
-                        End If
-                        zlib_from_array(archivos, file_template)
-                        TextBox1.AppendText(Path.GetFileName(archivos) & " - Face Fixed!." & vbCrLf)
-                    ElseIf BitConverter.ToInt16(file_temp, 216) = 731 Then
-                        If ComboBox1.SelectedIndex = 0 Then
-                            file_template = My.Resources.template
-                            For i = 0 To array_de_numeros.Count - 1
-                                Dim src = vert_offset + array_de_numeros(i) * 32
-                                Dim dest = 276 + i * 32
-
-                                'Debug.WriteLine("{0},{1}", src, dest)
-                                Array.Copy(file_temp, src, file_template, dest, 32)
-
-                            Next
-                        End If
-                        zlib_from_array(archivos, file_template)
-                        TextBox1.AppendText(Path.GetFileName(archivos) & " - The Face is already fixed!." & vbCrLf)
-                    Else
-                        TextBox1.AppendText(Path.GetFileName(archivos) & " - No Face PES6 HD Poly!." & vbCrLf)
-                    End If
+                    fix_face(archivos)
                 End If
 
 
@@ -140,4 +49,47 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ComboBox1.SelectedIndex = 0
     End Sub
+
+    Public Function fix_face(archivos) As Boolean
+        Dim file_temp() As Byte = unzlib(archivos)
+        Dim vert_offset = BitConverter.ToInt16(file_temp, 32) + 32
+
+        Dim file_template() As Byte
+
+        If BitConverter.ToInt16(file_temp, 336) = 829 Then 'IF FACE HD POLY 829 vert. (Not supported on we9)
+            If ComboBox1.SelectedIndex = 1 Then
+                'FACE HD POLY 829 vert. (Not supported on we9) TO FACE HD POLY  731 vert. (Supported on we9)
+                file_template = My.Resources.templateHD
+                Array.Copy(file_temp, vert_offset, file_template, 224, 23392)
+                TextBox1.AppendText(Path.GetFileName(archivos) & " - HD Face Fixed!." & vbCrLf)
+            Else
+                'FACE HD POLY 829 vert. (Not supported on we9) TO  LOW POLY
+                file_template = My.Resources.template
+                For i = 0 To array_de_numeros.Count - 1
+                    Dim src = vert_offset + array_de_numeros(i) * 32
+                    Dim dest = 276 + i * 32
+                    Array.Copy(file_temp, src, file_template, dest, 32)
+                    TextBox1.AppendText(Path.GetFileName(archivos) & " - Face converted to Low Poly!." & vbCrLf)
+                Next
+            End If
+            zlib_from_array(archivos, file_template)
+            Return True
+        ElseIf BitConverter.ToInt16(file_temp, 216) = 731 Then  'IF FACE HD POLY  731 vert. (Supported on we9)
+            If ComboBox1.SelectedIndex = 1 Then
+                TextBox1.AppendText(Path.GetFileName(archivos) & " - HD face is now supported on we9!." & vbCrLf)
+            Else
+                'FACE HD POLY  731 vert. (Supported on we9) To LOW POLY
+                file_template = My.Resources.template
+                For i = 0 To array_de_numeros.Count - 1
+                    Dim src = vert_offset + array_de_numeros(i) * 32
+                    Dim dest = 276 + i * 32
+                    Array.Copy(file_temp, src, file_template, dest, 32)
+                Next
+                zlib_from_array(archivos, file_template)
+                TextBox1.AppendText(Path.GetFileName(archivos) & " - Face converted to Low Poly!." & vbCrLf)
+            End If
+        Else
+            TextBox1.AppendText(Path.GetFileName(archivos) & " - Not face from PES6 HD Poly!." & vbCrLf)
+        End If
+    End Function
 End Class
