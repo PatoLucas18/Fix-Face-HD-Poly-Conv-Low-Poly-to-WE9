@@ -53,6 +53,18 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property updates() As Boolean
+            Get
+                Return CType(Me("updates"),Boolean)
+            End Get
+            Set
+                Me("updates") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
@@ -63,7 +75,7 @@ Namespace My
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
     Friend Module MySettingsProperty
         
-        <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")> _
+        <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
         Friend ReadOnly Property Settings() As Global.Fix_Face_HD_LOW_Poly.My.MySettings
             Get
                 Return Global.Fix_Face_HD_LOW_Poly.My.MySettings.Default

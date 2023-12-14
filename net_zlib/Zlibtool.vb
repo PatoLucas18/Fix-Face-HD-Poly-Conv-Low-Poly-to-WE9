@@ -1,220 +1,187 @@
 ﻿Imports System.IO
 Imports System.IO.Compression
+Imports Fix_Face_HD_LOW_Poly.common_functions2
+Imports System.Runtime.CompilerServices
 
 Module Zlibtool
-    Public Function zlib_from_array(ByVal file_base As String, ByVal Unzlibfile() As Byte)
+    'Friend number_magic_file() As New List(Of Integer) From {"", 11}
+    '400=opd,
+    '10E00=opd
+    '10600=bin
+    '600=bin multi
+    '10100=fnt,
+    '500=flgIf Show_messagebox = True Then If Show_messagebox = True Then MsgBox(
+    '10000=bin ball
+    '10001=kit encriptado
+    Public number_magic_file_list As New List(Of Integer) From {&H10400, &H10600, &H400, &H10E00, &H10600, &H10100, &H500, &H10000, &H10001}
+    Public number_magic_file As Integer
+    Public number_magic_sub_file As Integer
 
-        If IO.File.Exists(file_base) Then
-
-        Dim zlibfile() As Byte = IO.File.ReadAllBytes(file_base) 'Cargamos el archivo bin
-
-        Dim magic_number = BitConverter.ToInt32(zlibfile, 0)  'Obtenemos el numero magico
-
-        If magic_number = &H10000 Or magic_number = &H10600 Then 'Archivo de un solo zlib
-
-            'MsgBox(file_index)
-
-            Dim tempZlib() As Byte = zlib_array(Unzlibfile)
-                'Debug.WriteLine(magic_number)
-            Dim new_zlibfile(tempZlib.Length + 31) As Byte
-                
-
-            Array.Copy(tempZlib, 0, new_zlibfile, 32, tempZlib.Length)
-                new_zlibfile.SetInt32(0, magic_number) 'Numero Magico
-                new_zlibfile.SetInt32(4, tempZlib.Length) 'longitud zlib
-                new_zlibfile.SetInt32(8, Unzlibfile.Length) 'longitud unzlib
-                IO.File.WriteAllBytes(file_base, new_zlibfile)
-        End If
-
-        Exit Function
-        End If
-        Return False
-    End Function
-    Public Function zlib_file(ByVal archivo As String, Optional ByVal Save_Full_parts As Boolean = False)
-        'MsgBox(archivo.Substring(0, archivo.Length - 4))
-        Dim file_index As Integer = 0
-        Dim file_base As String = ""
-
-        If Save_Full_parts = False Then
-            file_index = archivo.Substring(archivo.Length - 3, 3)
-            file_base = archivo.Substring(0, archivo.Length - 4)
+    Public Sub zlib_array(ByVal unzlib_file_path As String, ByVal file_unzlib() As Byte, Optional ByVal Show_messagebox As Boolean = False)
+        If IO.File.Exists(unzlib_file_path) Then
         Else
-            file_base = archivo
+            Dim file2() As Byte = zlib(file_unzlib)
+            IO.File.WriteAllBytes(unzlib_file_path, file2)
+            If Show_messagebox = True Then MsgBox("OK", 262144)
+            If Show_messagebox = True Then MsgBox("can not read original compressed file!", 262144)
+            Exit Sub
         End If
 
-        If IO.File.Exists(file_base) Then 'Comprobar si el archivo Bin existe
-            Dim Unzlibfile() As Byte = IO.File.ReadAllBytes(archivo) 'Cargamos el archivo unzlid_00X
-            Dim zlibfile() As Byte = IO.File.ReadAllBytes(file_base) 'Cargamos el archivo bin
+        Dim file() As Byte = IO.File.ReadAllBytes(unzlib_file_path)
+        number_magic_file = file.ToInt32(0)
+        If number_magic_file = &H600 Then
 
-            Dim magic_number = BitConverter.ToInt32(zlibfile, 0)  'Obtenemos el numero magico
+        ElseIf number_magic_file_list.IndexOf(number_magic_sub_file) >= 0 Then
+            number_magic_sub_file = file.ToInt32(0)
+            IO.File.WriteAllBytes(unzlib_file_path, zlib(file_unzlib))
+            If Show_messagebox = True Then MsgBox("OK", 262144)
+        End If
 
-            If magic_number = &H10000 Or magic_number = &H10600 Then 'Archivo de un solo zlib
-
-                'MsgBox(file_index)
-                If file_index = 0 And Save_Full_parts = False Then
-                    Dim tempZlib() As Byte = zlib_array(Unzlibfile)
-
-                    Dim new_zlibfile(tempZlib.Length + 31) As Byte
-                    new_zlibfile.SetInt32LE(0, magic_number) 'Numero Magico
-                    new_zlibfile.SetInt32LE(4, tempZlib.Length) 'longitud zlib
-                    new_zlibfile.SetInt32LE(8, Unzlibfile.Length) 'longitud unzlib
-
-                    'InsertValue(new_zlibfile, magic_number, 0, 4) 'Numero Magico
-                    'InsertValue(new_zlibfile, tempZlib.Length, 4, 4) 'longitud zlib
-                    'InsertValue(new_zlibfile, Unzlibfile.Length, 8, 4) 'longitud unzlib
-                    Array.Copy(tempZlib, 0, new_zlibfile, 32, tempZlib.Length)
-
-                    IO.File.WriteAllBytes(file_base & "_zlib", new_zlibfile)
-                    MsgBox("OK")
-                Else
-                    MsgBox("index error")
-                End If
-            ElseIf magic_number = &H600 Then 'Archivo de varios zlib
-
-                If Save_Full_parts = False Then 'Guardamos solo el archivo zlib_00x
-                    'MULTI
-                    zlibfile = zlibfile.GetDataBlock(32)
-                    'Dim partes As Integer = BitConverter.ToInt32(zlibfile, 0)
-                    Dim partes As Integer = zlibfile.GetInt32LE(0)
-                    Dim new_file(roundOffset_16(partes * 4 + 8) - 1) As Byte
-                    InsertValue(new_file, partes, 0, 4)
-                    InsertValue(new_file, 8, 4, 1)
-                    For p = 0 To partes - 1
-
-                        Dim new_offset As Integer = roundOffset_16(new_file.Length)
-
-                        If p = CInt(archivo.Substring(archivo.Length - 3, 3)) Then
-                            'zlib file select
-                            Dim tempZlib() As Byte = zlib_array(Unzlibfile)
-
-                            Dim new_zlibfile(tempZlib.Length + 31) As Byte
-                            Dim new_magic_number As Integer = BitConverter.ToInt32(zlibfile, BitConverter.ToInt32(zlibfile, p * 4 + 8))
-                            new_zlibfile.SetInt32LE(0, magic_number) 'Numero Magico
-                            new_zlibfile.SetInt32LE(4, tempZlib.Length) 'longitud zlib
-                            new_zlibfile.SetInt32LE(8, Unzlibfile.Length) 'longitud unzlib
-
-                            'InsertValue(new_zlibfile, new_magic_number, 0, 4) 'Numero Magico
-                            'InsertValue(new_zlibfile, tempZlib.Length, 4, 4) 'longitud zlib
-                            'InsertValue(new_zlibfile, Unzlibfile.Length, 8, 4) 'longitud unzlib
-                            Array.Copy(tempZlib, 0, new_zlibfile, 32, tempZlib.Length)
-
-                            'MsgBox("parte6")
-                            Dim offset As Integer = 0
-                            Dim lenght As Integer = 32 + BitConverter.ToInt32(new_zlibfile, offset + 4)
-                            ReDim Preserve new_file(new_offset + roundOffset_16(lenght) - 1)
-                            'GetDataBlock(file, offset, lenght
-                            InsertValue(new_file, new_offset, p * 4 + 8, 4)
-                            Array.Copy(new_zlibfile, offset, new_file, new_offset, lenght)
-                        Else
-
-                            Dim offset As Integer = BitConverter.ToInt32(zlibfile, p * 4 + 8)
-                            Dim lenght As Integer = 32 + BitConverter.ToInt32(zlibfile, offset + 4)
-                            ReDim Preserve new_file(new_offset + roundOffset_16(lenght) - 1)
-                            'GetDataBlock(file, offset, lenght)
-                            InsertValue(new_file, new_offset, p * 4 + 8, 4)
-                            Array.Copy(zlibfile, offset, new_file, new_offset, lenght)
-                        End If
-                    Next
-                    Dim final_zlib(31 + new_file.Length) As Byte
-                    'Array.Copy(file, 0, final_zlib, 0, 4)
-                    InsertValue(final_zlib, magic_number, 0, 4)
-                    InsertValue(final_zlib, new_file.Length, 4, 4)
-                    Array.Copy(new_file, 0, final_zlib, 32, new_file.Length)
-
-                    IO.File.WriteAllBytes(file_base, final_zlib)
-                    MsgBox("OK")
-                ElseIf Save_Full_parts = True Then
-                    'MULTI EXPORT ALL files
-                    zlibfile = zlibfile.GetDataBlock(32)
-                    Dim partes As Integer = BitConverter.ToInt32(zlibfile, 0)
-                    Dim new_file(roundOffset_16(partes * 4 + 8) - 1) As Byte
-                    InsertValue(new_file, partes, 0, 4)
-                    InsertValue(new_file, 8, 4, 1)
-                    For p = 0 To partes - 1
-
-                        Dim new_offset As Integer = roundOffset_16(new_file.Length)
-
-                        'zlib file select
-                        Unzlibfile = IO.File.ReadAllBytes(archivo & "_" & digits(p, 3))
-                        Dim tempZlib() As Byte = zlib_array(Unzlibfile)
-
-                        Dim new_zlibfile(tempZlib.Length + 31) As Byte
-                        Dim new_magic_number As Integer = BitConverter.ToInt32(zlibfile, BitConverter.ToInt32(zlibfile, p * 4 + 8))
-
-                        InsertValue(new_zlibfile, new_magic_number, 0, 4) 'Numero Magico
-                        InsertValue(new_zlibfile, tempZlib.Length, 4, 4) 'longitud zlib
-                        InsertValue(new_zlibfile, Unzlibfile.Length, 8, 4) 'longitud unzlib
-                        Array.Copy(tempZlib, 0, new_zlibfile, 32, tempZlib.Length)
-
-                        'MsgBox("parte6")
-                        Dim offset As Integer = 0
-                        Dim lenght As Integer = 32 + BitConverter.ToInt32(new_zlibfile, offset + 4)
-                        ReDim Preserve new_file(new_offset + roundOffset_16(lenght) - 1)
-                        'GetDataBlock(file, offset, lenght
-                        InsertValue(new_file, new_offset, p * 4 + 8, 4)
-                        Array.Copy(new_zlibfile, offset, new_file, new_offset, lenght)
-                    Next
-                    Dim final_zlib(31 + new_file.Length) As Byte
-                    'Array.Copy(file, 0, final_zlib, 0, 4)
-                    InsertValue(final_zlib, magic_number, 0, 4)
-                    InsertValue(final_zlib, new_file.Length, 4, 4)
-                    Array.Copy(new_file, 0, final_zlib, 32, new_file.Length)
-
-                    IO.File.WriteAllBytes(file_base, final_zlib)
-                    MsgBox("OK")
-                Else
-                    MsgBox("not a extracted file")
-
-                End If
+    End Sub
+    Public Function unzlib_array(ByVal archivo As String, Optional ByVal Show_messagebox As Boolean = False) As Byte()
+        Dim file() As Byte = IO.File.ReadAllBytes(archivo)
+        number_magic_file = file.ToInt32(0)
+        number_magic_sub_file = file.ToInt32(0)
+        
+        If number_magic_file_list.IndexOf(number_magic_sub_file) >= 0 Then
+            If BitConverter.ToUInt16(file, 32) = &HDA78 Or BitConverter.ToUInt16(file, 32) = &H9C78 Then
+                Return unzlib(file)
             Else
-                MsgBox("can not read original compressed file!")
-
-
-
+                If Show_messagebox = True Then MsgBox("this is not a zlib Compresed file", 262144)
             End If
-            Exit Function
+        Else
+            If Show_messagebox = True Then MsgBox("this is not a zlib Compresed file", 262144)
         End If
-        Return False
     End Function
-    Public Function unzlib(ByVal archivo As String, Optional ByVal File_save As Boolean = False) As Byte()
 
-        Dim zlibfile() As Byte = IO.File.ReadAllBytes(archivo)
-        Dim magic_number = BitConverter.ToInt32(zlibfile, 0)
-        If magic_number = &H10000 Or magic_number = &H10600 Then
-            Dim zlib_lenght = BitConverter.ToInt32(zlibfile, 4)
-            If File_save = True Then
-                IO.File.WriteAllBytes(archivo & "_" & digits(0, 3), Decompress(zlibfile.GetDataBlock(34, zlib_lenght - 2)))
-            Else
-                Return Decompress(zlibfile.GetDataBlock(34, zlib_lenght - 2))
-            End If
-            MsgBox("OK")
-        ElseIf magic_number = &H600 Then
-            For i = 1 To BitConverter.ToInt32(zlibfile, 32)
-                Dim offset_block As Integer = 32 + BitConverter.ToInt32(zlibfile, i * 4 + 4 + 32)
-                Dim new_magic_number = BitConverter.ToInt32(zlibfile, 32 + BitConverter.ToInt32(zlibfile, i * 4 + 4 + 32))
-                If new_magic_number = &H10000 Or magic_number = &H10600 Then
-                    Dim zlib_lenght = BitConverter.ToInt32(zlibfile, 4 + offset_block)
-                    If File_save = True Then
-                        IO.File.WriteAllBytes(archivo & "_" & digits(i - 1, 3), Decompress(zlibfile.GetDataBlock(offset_block + 34, zlib_lenght - 2)))
-                    Else
-                        Return Decompress(zlibfile.GetDataBlock(offset_block + 34, zlib_lenght - 2))
-                    End If
+    Public Sub unzlib_files(ByVal archivo As String, Optional ByVal Show_messagebox As Boolean = False)
+        Dim file() As Byte = IO.File.ReadAllBytes(archivo)
+        number_magic_file = file.ToInt32(0)
+        number_magic_sub_file = file.ToInt32(0)
+
+        'Debug.Write("MAG=" & number_magic_file_list.IndexOf(number_magic_file))
+
+        If number_magic_file = &H600 Then
+            file = data(file, 32)
+            'MsgBox("")
+            Dim num_blocks As Integer = file.ToInt32(0) 'num bloques
+
+            For i As Integer = 0 To num_blocks - 1
+                Dim offset_blocks As Integer = file.ToInt32(i * 4 + 8) 'Inicio offsets
+                Dim block_size As Integer = roundOffset_16(file.ToInt32(offset_blocks + 4) + 32)
+
+                number_magic_sub_file = file.ToInt32(offset_blocks)
+
+                Dim index As String = digits(i, 3)
+
+                Dim file_zlib() As Byte = data(file, offset_blocks, block_size)
+
+                If file_zlib.ToUInt16(32) = &HDA78 Then
+                    IO.File.WriteAllBytes(archivo & "_" & index, unzlib(file_zlib))
                 End If
+
+
             Next
-            MsgBox("OK")
-        Else
+            If Show_messagebox = True Then MsgBox("OK", 262144)
 
-            MsgBox("this is not a zlib Compresed file")
+        ElseIf number_magic_file_list.IndexOf(number_magic_sub_file) <> -1 Then
+            'IO.File.WriteAllBytes(archivo & "_000", file)
+            'MsgBox(file.ToInt16(32))
+            If file.ToUInt16(32) = &HDA78 Then
+                'Try
+                IO.File.WriteAllBytes(archivo & "_000", unzlib(file))
+                If Show_messagebox = True Then MsgBox("OK", 262144)
+                'Catch ex As Exception
+                '    If Show_messagebox = True Then MsgBox("Decompress error!", 262144)
+                'End Try
+
+            Else
+                If Show_messagebox = True Then MsgBox("this is not a zlib Compresed file", 262144)
+            End If
+        Else
+            If Show_messagebox = True Then MsgBox("this is not a zlib Compresed file", 262144)
+        End If
+    End Sub
+    Public Sub zlib_files(ByVal unzlub_file_path As String, Optional ByVal Show_messagebox As Boolean = False)
+        Dim file_path As String = unzlub_file_path.Substring(0, unzlub_file_path.Length - 4)
+        If IO.File.Exists(file_path) Then
+        Else
+            If Show_messagebox = True Then MsgBox("can not read original compressed file!", 262144)
+            Exit Sub
+        End If
+        Dim file() As Byte = IO.File.ReadAllBytes(file_path)
+        number_magic_file = file.ToInt32(0)
+        If number_magic_file = &H600 Then
+
+            file = data(file, 32)
+
+            Dim num_blocks As Integer = file.ToInt32(0) 'num bloques
+            Dim new_file(roundOffset_16(num_blocks * 4 + 8) - 1) As Byte
+            new_file(0) = num_blocks
+            new_file(4) = 8
+
+
+            For i As Integer = 0 To num_blocks - 1
+                Dim offset_blocks As Integer = file.ToInt32(i * 4 + 8) 'Inicio offsets
+                Dim block_size As Integer = roundOffset_16(file.ToInt32(offset_blocks + 4) + 32)
+
+                number_magic_sub_file = file.ToInt32(offset_blocks)
+                Dim file_unzlib() As Byte = IO.File.ReadAllBytes(unzlub_file_path)
+
+                Dim new_offset = roundOffset_16(new_file.Length)
+                SetInt32(new_file, i * 4 + 8, new_offset)
+                Dim index As Integer = unzlub_file_path.Substring(unzlub_file_path.Length - 3, 3)
+                If i = index Then
+                    Dim file_zlib() As Byte = zlib(file_unzlib)
+                    ReDim Preserve new_file(new_offset + file_zlib.Length - 1)
+                    Array.Copy(file_zlib, 0, new_file, new_offset, file_zlib.Length)
+                Else
+                    Dim file_zlib() As Byte = data(file, offset_blocks, block_size)
+                    ReDim Preserve new_file(new_offset + file_zlib.Length - 1)
+                    Array.Copy(file_zlib, 0, new_file, new_offset, file_zlib.Length)
+                End If
+
+            Next
+            Dim final_file(new_file.Length + 31) As Byte
+            final_file.SetInt32(0, &H600)
+            final_file.SetInt32(4, new_file.Length)
+            Array.Copy(new_file, 0, final_file, 32, new_file.Length)
+            IO.File.WriteAllBytes(file_path, final_file)
+            If Show_messagebox = True Then MsgBox("OK", 262144)
+        ElseIf number_magic_file_list.IndexOf(number_magic_sub_file) >= 0 Then
+            number_magic_sub_file = file.ToInt32(0)
+            Dim file_unzlib() As Byte = IO.File.ReadAllBytes(unzlub_file_path)
+            IO.File.WriteAllBytes(file_path, zlib(file_unzlib))
+            If Show_messagebox = True Then MsgBox("OK", 262144)
         End If
 
-        'Return unzlibfile
+    End Sub
 
+    Public Function unzlib(ByVal array_file() As Byte) As Byte()
+        Return array_file.data(32).Decompress
+    End Function
+    Public Function zlib(ByVal array_file() As Byte) As Byte()
 
+        Dim unzlib_lenght As Integer = array_file.Length
+        array_file = array_file.Compress
+        Dim zlib_lenght As Integer = array_file.Length
+        Dim new_file(zlib_lenght + 31) As Byte
+        new_file.SetInt32(0, number_magic_sub_file)
+        new_file.SetInt32(4, zlib_lenght)
+        new_file.SetInt32(8, unzlib_lenght)
+        Array.Copy(array_file, 0, new_file, 32, zlib_lenght)
+        Return new_file
+    End Function
+    Public Function mg_number(ByVal array() As Byte, ByVal Offset As Integer) As Integer
+        Return array.ToInt32(Offset)
     End Function
 
-    Function zlib_array(ByVal toCompress As Byte()) As Byte()
-        Dim level As CompressionLevel = CompressionLevel.Optimal
 
+
+
+    <Extension>
+    Function Compress(ByVal toCompress As Byte()) As Byte()
+        Dim level As CompressionLevel = CompressionLevel.Optimal
         Using fsSource As MemoryStream = New MemoryStream(toCompress)
             Using fsTarget As MemoryStream = New MemoryStream()
 
@@ -230,35 +197,12 @@ Module Zlibtool
             End Using
         End Using
     End Function
-    Function zlib_file(ByVal path_src As String)
-        Dim level As CompressionLevel = CompressionLevel.Optimal
-        Using fsSource As FileStream = New FileStream(path_src, FileMode.Open, FileAccess.Read)
-
-            Using fsTarget As FileStream = New FileStream(path_src & ".zlib", FileMode.Create, FileAccess.Write)
-
-                Using zs As ZLIB.ZLIBStream = New ZLIB.ZLIBStream(fsTarget, level, True)
-                    Dim bytesLeidos As Integer = 0
-                    Dim buffer As Byte() = New Byte(fsSource.Length - 1) {}
-
-                    bytesLeidos = fsSource.Read(buffer, 0, buffer.Length)
-                    zs.Write(buffer, 0, buffer.Length)
-
-                    'MsgBox(bytesLeidos)
-                    'IO.File.WriteAllBytes("C:\Users\USER\Desktop\file_1.png", buffer)
-                    'While ((bytesLeidos = fsSource.Read(buffer, 0, buffer.Length)) > 0)
-                    '    zs.Write(buffer, 0, bytesLeidos)
-                    'End While
-                End Using
-            End Using
-        End Using
-    End Function
-
-    ''' <summary>
-    ''' Decompresses a Byte() array using the DEFLATE algorithm.
-    ''' </summary>
+    <Extension>
     Function Decompress(ByVal toDecompress As Byte()) As Byte()
+
+
         ' Get the stream of the source file.
-        Using inputStream As MemoryStream = New MemoryStream(toDecompress)
+        Using inputStream As MemoryStream = New MemoryStream(toDecompress.data(2))
 
             ' Create the decompressed stream.
             Using outputStream As MemoryStream = New MemoryStream()
@@ -275,12 +219,9 @@ Module Zlibtool
 
             End Using
         End Using
+        
     End Function
 
 
-
-    Public Function digits(ByVal number As Integer, ByVal count As Integer) As String
-        Dim out As String = "00000000000000000000000000000000000000000000" & number
-        Return out.Substring(out.Length - count, count)
-    End Function
+    
 End Module

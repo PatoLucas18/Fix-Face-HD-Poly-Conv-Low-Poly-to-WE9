@@ -10,3 +10,18 @@ C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Con
 C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert pes5\Face Convert pes5\obj\x86\Debug\Fix Face HD Poly & Conv Low Poly to WE9.exe
 C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert pes5\Face Convert pes5\obj\x86\Debug\Fix Face HD Poly & Conv Low Poly to WE9.xml
 C:\Users\USER\Documents\Visual Studio 2010\Projects\Face Convert PC-PS2\Face Convert pes5\Face Convert pes5\obj\x86\Debug\Fix Face HD Poly & Conv Low Poly to WE9.pdb
+C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\bin\Debug\Fix Face HD Poly & Conv Low Poly to WE9.exe.config
+C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\obj\x86\Debug\Fix Face HD Poly & Conv Low Poly to WE9.exe
+C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\obj\x86\Debug\Fix Face HD Poly & Conv Low Poly to WE9.xml
+C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\obj\x86\Debug\Fix Face HD Poly & Conv Low Poly to WE9.pdb
+C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\obj\x86\Debug\Fix_Face_HD_LOW_Poly.Form1.resources
+C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\obj\x86\Debug\Fix_Face_HD_LOW_Poly.Resources.resources
+C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\obj\x86\Debug\Fix Face HD Poly Conv Low Poly to WE9.vbproj.GenerateResource.Cache
+C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\bin\Debug\Fix Face HD Poly & Conv Low Poly to WE9.exe
+C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\bin\Debug\Fix Face HD Poly & Conv Low Poly to WE9.pdb
+C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\bin\Debug\Fix Face HD Poly & Conv Low Poly to WE9.xml
+C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\obj\x86\Debug\Fix_Face_HD_LOW_Poly.Form2.resources
+C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\obj\x86\Debug\Fix Face HD Poly Conv Low Poly to WE9.vbprojResolveAssemblyReference.cache
+C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\obj\x86\Debug\Fix_Face_HD_LOW_Poly.CheckUpdate.resources
+C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\obj\x86\Debug\Fix_Face_HD_LOW_Poly.AboutBox1.resources
