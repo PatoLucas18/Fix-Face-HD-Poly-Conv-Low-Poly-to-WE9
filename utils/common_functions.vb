@@ -1,6 +1,7 @@
+
 Imports System.Runtime.CompilerServices
 
-Namespace common_functions2
+Namespace common_functions
     Module Utils
         '<Extension()>
         'Public Sub SetInt16(Array_byte() As Byte, position As Integer, value As Integer)
@@ -155,26 +156,26 @@ Namespace common_functions2
 
         End Function
 
-        Public Function hex_to_rgb(ByVal Value As String) As Color
-            'Value = Replace(Value, "#", "")
-            'Value = "&H" & Value
-            'Return ColorTranslator.FromOle(Value)
+        'Public Function hex_to_rgb(ByVal Value As String) As Color
+        '    'Value = Replace(Value, "#", "")
+        '    'Value = "&H" & Value
+        '    'Return ColorTranslator.FromOle(Value)
 
-            Value = Replace(Value, "#", "")
-            Dim red As String = "&H" & Value.Substring(0, 2)
-            Value = Replace(Value, red, "", , 1)
-            Dim green As String = "&H" & Value.Substring(2, 2)
-            Value = Replace(Value, green, "", , 1)
-            Dim blue As String = "&H" & Value.Substring(4, 2)
-            Value = Replace(Value, blue, "", , 1)
-            Return Color.FromArgb(red, green, blue)
-        End Function
-        Public Function rgb_to_hex(ByVal rgb As Color) As String
+        '    Value = Replace(Value, "#", "")
+        '    Dim red As String = "&H" & Value.Substring(0, 2)
+        '    Value = Replace(Value, red, "", , 1)
+        '    Dim green As String = "&H" & Value.Substring(2, 2)
+        '    Value = Replace(Value, green, "", , 1)
+        '    Dim blue As String = "&H" & Value.Substring(4, 2)
+        '    Value = Replace(Value, blue, "", , 1)
+        '    Return Color.FromArgb(red, green, blue)
+        'End Function
+        'Public Function rgb_to_hex(ByVal rgb As Color) As String
 
-            Dim value As Integer = rgb.ToArgb()
-            Dim hex As String = value.ToString("X6").Substring(2, 6)
-            Return hex
-        End Function
+        '    Dim value As Integer = rgb.ToArgb()
+        '    Dim hex As String = value.ToString("X6").Substring(2, 6)
+        '    Return hex
+        'End Function
         Public Function roundOffset_16(ByVal value As Integer) As Integer
             Dim valorfinal As Integer = CStr(Math.Round(value / 16) * 16)
             If valorfinal < value Then valorfinal += 16
@@ -185,5 +186,18 @@ Namespace common_functions2
             Return out.Substring(out.Length - count, count)
         End Function
 
+        <Extension()>
+        Function SliceBytes(ByVal bytes As Byte()) As Byte()
+            ' Buscar el índice del primer byte con valor 0x00
+            Dim index As Integer = Array.IndexOf(bytes, CByte(&H0))
+
+            ' Comprobar si se encontró un byte 0x00
+            If index >= 0 Then
+                Return bytes.data(0, index)
+            Else
+                ' No se encontró un byte 0x00 en el array, retornar un array vacío
+                Return New Byte() {}
+            End If
+        End Function
     End Module
 End Namespace

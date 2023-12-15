@@ -52,6 +52,10 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zlib, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Ionic.Zlib.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\VS Projects\Update_WinApp\bin\Debug\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -114,18 +118,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="net_zlib\Copia de Zlibtool.vb" />
-    <Compile Include="net_zlib\Form2.Designer.vb">
-      <DependentUpon>Form2.vb</DependentUpon>
-    </Compile>
-    <Compile Include="net_zlib\Form2.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="net_zlib\Hash\Adler32.vb" />
-    <Compile Include="net_zlib\utils\common_functions.vb" />
-    <Compile Include="net_zlib\ZLibHeader.vb" />
-    <Compile Include="net_zlib\ZLIBStream.vb" />
-    <Compile Include="net_zlib\Zlibtool.vb" />
+    <Compile Include="zlib.vb" />
+    <Compile Include="utils\common_functions.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AboutBox1.resx">
@@ -142,9 +136,6 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="net_zlib\Form2.resx">
-      <DependentUpon>Form2.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

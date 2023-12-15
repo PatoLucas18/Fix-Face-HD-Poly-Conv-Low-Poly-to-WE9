@@ -148,7 +148,7 @@ Public Class CheckUpdate
             lb_current.Text = My.Application.Info.Version.ToString()
             lb_last.Text = get_tag_name(githubAPI)
             If compare(githubAPI) = False Then
-                lb_update.Text = ("The application version is up-to-date.")
+                lb_update.Text = ("The application version is updated.")
                 btn_download.Enabled = False
             Else
                 btn_download.Enabled = True

@@ -20,7 +20,6 @@ C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\obj\x86\Deb
 C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\bin\Debug\Fix Face HD Poly & Conv Low Poly to WE9.exe
 C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\bin\Debug\Fix Face HD Poly & Conv Low Poly to WE9.pdb
 C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\bin\Debug\Fix Face HD Poly & Conv Low Poly to WE9.xml
-C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\obj\x86\Debug\Fix_Face_HD_LOW_Poly.Form2.resources
 C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\obj\x86\Debug\Fix Face HD Poly Conv Low Poly to WE9.vbprojResolveAssemblyReference.cache
 C:\Users\Pato\Documents\GitHub\Fix-Face-HD-Poly-Conv-Low-Poly-to-WE9\obj\x86\Debug\Fix_Face_HD_LOW_Poly.CheckUpdate.resources

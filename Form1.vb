@@ -1,6 +1,6 @@
 ﻿Imports System.IO
-Imports Fix_Face_HD_LOW_Poly.common_functions2
-Imports Fix_Face_HD_LOW_Poly.Zlibtool
+Imports Fix_Face_HD_LOW_Poly.common_functions
+Imports Fix_Face_HD_LOW_Poly.zlib
 Imports System.Threading.Tasks
 
 Public Class Form1
@@ -110,7 +110,7 @@ Public Class Form1
 
     Public Function fix_face(archivos) As Boolean
         Try
-            Dim file_temp() As Byte = unzlib_array(archivos)
+            Dim file_temp() As Byte = unzlib_file(archivos)
             Dim vert_offset = BitConverter.ToInt16(file_temp, 32) + 32
             Debug.WriteLine(archivos)
             Dim file_template() As Byte
@@ -132,7 +132,7 @@ Public Class Form1
                     TextBox1.AppendText(Path.GetFileName(archivos) & " - Face converted to Low Poly!." & vbCrLf)
                 End If
                 'zlib_from_array(archivos, file_template)
-                zlib_array(archivos, file_template)
+                zlib_file(archivos, file_template)
                 Return True
             ElseIf BitConverter.ToInt16(file_temp, 216) = 731 Then  'IF FACE HD POLY  731 vert. (Supported on we9)
                 If ComboBox1.SelectedIndex = 1 Then
@@ -145,7 +145,7 @@ Public Class Form1
                         Dim dest = 276 + i * 32
                         Array.Copy(file_temp, src, file_template, dest, 32)
                     Next
-                    zlib_array(archivos, file_template)
+                    zlib_file(archivos, file_template)
                     TextBox1.AppendText(Path.GetFileName(archivos) & " - Face converted to Low Poly!." & vbCrLf)
                 End If
             Else
